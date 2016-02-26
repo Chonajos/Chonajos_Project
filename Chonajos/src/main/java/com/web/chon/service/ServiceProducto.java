@@ -64,16 +64,19 @@ public class ServiceProducto implements IfaceProducto {
 
     @Override
     public int deleteProducto(int idProducto) {
+        System.out.println("service");
        return ejb.deleteProducto(idProducto);
     }
 
     @Override
     public int updateProducto(Producto producto) {
+        System.out.println("service");
         return ejb.updateProducto(producto);
     }
 
     @Override
     public int insertarProducto(Producto producto) {
+        System.out.println("service");
         return ejb.insertarProducto(producto);
     }
 

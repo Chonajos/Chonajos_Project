@@ -34,11 +34,12 @@ public class EjbProducto implements NegocioProducto {
     public int deleteProducto(int idProducto) {
         try {
 
-            Query query = em.createNativeQuery("delete Producto where ID_PRODUCTO_PK :idProducto");
+            System.out.println("id prodcuto a eliminar :"+idProducto);
+            Query query = em.createNativeQuery("delete Producto where ID_PRODUCTO_PK = :idProducto");
             query.setParameter("idProducto", idProducto);
-            int i = query.executeUpdate();
+            query.executeUpdate();
 
-            return i;
+            return 0;
 
         } catch (Exception ex) {
             Logger.getLogger(EjbProducto.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,13 +52,14 @@ public class EjbProducto implements NegocioProducto {
 
         try {
 
-            Query query = em.createNativeQuery("update Producto set NOMBRE_PRODUCTO:nombre,DESCRIPCION_PRODUCTO:descripcion  where ID_PRODUCTO_PK :idProducto");
+            System.out.println("producto a modificar :"+producto.getNombreProducto() +" desc "+producto.getDescripcionProducto()+" "+producto.getIdProductoPk().intValue());
+            Query query = em.createNativeQuery("update Producto set NOMBRE_PRODUCTO = :nombre,DESCRIPCION_PRODUCTO = :descripcion  where ID_PRODUCTO_PK = :idProducto");
             query.setParameter("nombre", producto.getNombreProducto());
             query.setParameter("descripcion", producto.getDescripcionProducto());
             query.setParameter("idProducto", producto.getIdProductoPk().intValue());
-            int i = query.executeUpdate();
+            query.executeUpdate();
 
-            return i;
+            return 0;
 
         } catch (Exception ex) {
             Logger.getLogger(EjbProducto.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,16 +87,16 @@ public class EjbProducto implements NegocioProducto {
 
     @Override
     public int insertarProducto(Producto producto) {
-
+        System.out.println("ejb");
         try {
-
-            Query query = em.createNativeQuery("insert into PRODUCTO (ID_PRODUCTO_PK,NOMBRE_PRODUCTO,DESCRIPCION_PRODUCTO) values(S_PRODUCTO.NextVal,:producto,:descripcion);");
+            System.out.println("insert : "+producto.getNombreProducto() +" "+producto.getDescripcionProducto());
+            Query query = em.createNativeQuery("insert into PRODUCTO (ID_PRODUCTO_PK,NOMBRE_PRODUCTO,DESCRIPCION_PRODUCTO) values(S_PRODUCTO.NextVal,:producto,:descripcion)");
             query.setParameter("producto", producto.getNombreProducto());
             query.setParameter("descripcion", producto.getDescripcionProducto());
       
-            int i = query.executeUpdate();
+            query.executeUpdate();
 
-            return i;
+            return 0;
 
         } catch (Exception ex) {
             Logger.getLogger(EjbProducto.class.getName()).log(Level.SEVERE, null, ex);

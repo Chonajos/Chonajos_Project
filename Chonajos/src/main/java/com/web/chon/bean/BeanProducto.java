@@ -61,9 +61,11 @@ public class BeanProducto implements Serializable, BeanSimple {
     @Override
     public String insert() {
         try {
+ 
             serviceProducto.insertarProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
         } catch (Exception ex) {
+            System.out.println("error"+ex.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar insertar el registro :" + data.getNombreProducto() + "."));
         }
         backView();
