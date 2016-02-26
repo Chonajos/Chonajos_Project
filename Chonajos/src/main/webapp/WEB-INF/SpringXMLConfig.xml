@@ -29,5 +29,6 @@
    
     <!-- Servicios -->
     <bean id="usuarioService" class="com.web.chon.service.ServiceUsuario" />
+    <bean id="serviceProducto" class="com.web.chon.service.ServiceProducto"/>
     
 </beans>

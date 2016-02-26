@@ -2,6 +2,8 @@ package com.web.chon.bean;
 
 import com.web.chon.dominio.Usuario;
 import com.web.chon.service.ServiceUsuario;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -29,12 +31,14 @@ public class BeanUsuario {
     }
 
     public String validarLogin() {
-        System.out.println("Ususario : " + getUsuario().getClaveUsuario());
-        System.out.println("Password : " + getUsuario().getContrasenaUsuario());
+       
         try {
             usuario = getServiceUsuario().validarLogin(usuario);
             
             if (usuario.getStatus()) {
+                  ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                context.redirect(context.getRequestContextPath() + "/views/welcome.jr");
+
                 return "/content/welcome";
             } else {
                 return "login";
