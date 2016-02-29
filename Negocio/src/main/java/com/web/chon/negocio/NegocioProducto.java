@@ -11,13 +11,10 @@ import javax.ejb.Remote;
 @Remote
 public interface NegocioProducto {
     
-   public List<Object[]> getProductos();
-    
-    public Object[] getProductoById(int idProducto);
-    
+    public List<Object[]> getProductos();
     public int deleteProducto(int idProducto);
-    
+    public int insertarProducto(Producto producto);
     public int updateProducto(Producto producto);
     
-    public int insertarProducto(Producto producto);
+
 }

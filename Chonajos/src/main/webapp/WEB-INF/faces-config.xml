@@ -44,5 +44,41 @@
             <value>#{serviceProducto}</value>
         </managed-property>
     </managed-bean>     
+    
+    <!--subProductos-->
+    
+    <managed-bean>
+        <managed-bean-name>beanSubProducto</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanSubProducto</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceSubProducto</property-name>
+            <value>#{serviceSubProducto}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceProducto</property-name>
+            <value>#{serviceProducto}</value>
+        </managed-property>
+    </managed-bean> 
+    
+    <!--Usuarios-->    
+        
+    <managed-bean>
+        <managed-bean-name>beanCatUsuario</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanCatUsuario</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceCatUsuario</property-name>
+            <value>#{serviceCatUsuario}</value>
+        </managed-property>
+    </managed-bean>
+    
+     
+    <!--Images--> 
+    <managed-bean>
+        <managed-bean-name>beanImages</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanImages</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 
 </faces-config>

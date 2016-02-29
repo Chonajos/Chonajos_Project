@@ -20,7 +20,7 @@ public interface IfaceProducto {
     
     public int deleteProducto(int idProducto);
     
-    public int updateProducto(Producto producto);
+    public int updateProducto(Producto producto );
     
-    public int insertarProducto(Producto producto);
+    public int insertarProducto(Producto producto );
 }

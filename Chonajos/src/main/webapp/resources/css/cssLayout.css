@@ -58,4 +58,8 @@
   text-decoration : underline;
 }
 
+.ui-top, .ui-top .ui-layout, .ui-top .ui-layout-bd, .ui-top .ui-layout-unit {
+    background-image: none;
+    background-color: #00acd6; }
+
 

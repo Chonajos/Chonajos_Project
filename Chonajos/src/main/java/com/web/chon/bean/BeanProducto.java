@@ -61,7 +61,7 @@ public class BeanProducto implements Serializable, BeanSimple {
     @Override
     public String insert() {
         try {
- 
+            System.out.println("data"+data.toString());
             serviceProducto.insertarProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
         } catch (Exception ex) {

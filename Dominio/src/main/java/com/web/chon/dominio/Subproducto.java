@@ -22,7 +22,8 @@ public class Subproducto implements Serializable {
     private String urlImagenSubproducto;
     private BigInteger precioMinimo;
     private BigInteger precioMaximo;
-    private Producto idProductoFk;
+    private BigInteger precioVenta;
+    private BigDecimal idProductoFk;
 
     public Subproducto() {
     }
@@ -84,13 +85,24 @@ public class Subproducto implements Serializable {
         this.precioMaximo = precioMaximo;
     }
 
-    public Producto getIdProductoFk() {
+    public BigDecimal getIdProductoFk() {
         return idProductoFk;
     }
 
-    public void setIdProductoFk(Producto idProductoFk) {
+    public void setIdProductoFk(BigDecimal idProductoFk) {
         this.idProductoFk = idProductoFk;
     }
+
+
+    public BigInteger getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(BigInteger precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+    
+    
 
     @Override
     public int hashCode() {
@@ -114,7 +126,10 @@ public class Subproducto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.web.chon.entities.Subproducto[ idSubproductoPk=" + idSubproductoPk + " ]";
+        return "Subproducto{" + "idSubproductoPk=" + idSubproductoPk + ", nombreSubproducto=" + nombreSubproducto + ", descripcionSubproducto=" + descripcionSubproducto + ", urlImagenSubproducto=" + urlImagenSubproducto + ", precioMinimo=" + precioMinimo + ", precioMaximo=" + precioMaximo + ", precioVenta=" + precioVenta + ", idProductoFk=" + idProductoFk + '}';
     }
+
+    
+    
     
 }

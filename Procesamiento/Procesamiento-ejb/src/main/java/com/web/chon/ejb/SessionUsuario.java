@@ -25,27 +25,36 @@ public class SessionUsuario implements NegocioLogin {
 
     @Override
     public Usuario validarLogin(Usuario obj) throws Exception {
-
+        Usuario usuario = new Usuario();
         try {
-            Query query = em.createNamedQuery("Usuario.findByClaveUsuarioAndContrasenaUsuario");
-            query.setParameter("claveUsuario", obj.getClaveUsuario().trim());
-            query.setParameter("contrasenaUsuario", obj.getContrasenaUsuario().trim());
-            System.out.println("paso query " + query );
-            List lista = query.getResultList();
-            System.out.println("datos de lista" + lista.toString());
+
+            Query query = em.createNativeQuery("SELECT * FROM USUARIO WHERE CLAVE_USUARIO = ? AND CONTRASENA_USUARIO =?");
+
+            query.setParameter(1, obj.getClaveUsuario().trim());
+            query.setParameter(2, obj.getContrasenaUsuario().trim());
+
+            List<Object[]> lista = query.getResultList();
+
             if (lista.size() > 0) {
-                System.out.println("usuario encontrado");
-                obj.setMensaje("Usuario encontrado");
-                obj.setStatus(true);
+
+                for (Object[] object : lista) {
+                    usuario.setNombreUsuario(object[1] == null ? "" : object[1].toString());
+                    usuario.setApaternoUsuario(object[2] == null ? "" : object[2].toString());
+                    usuario.setAmaternoUsuario(object[3] == null ? "" : object[3].toString());
+                    usuario.setMensaje("Usuario encontrado");
+                    usuario.setStatus(true);
+
+                }
             } else {
-                System.out.println("NO ENCONTRADO");
-                obj.setMensaje("Usuario no encontrado");
-                obj.setStatus(false);
+
+                usuario.setMensaje("Usuario no encontrado");
+                usuario.setStatus(false);
             }
 
-            return obj;
+            return usuario;
         } catch (Exception ex) {
-            throw new Exception("Error al validar el usuario " + ex.getMessage());
+            System.out.println("Error" + ex.getMessage());
+            return usuario;
         }
     }
 }

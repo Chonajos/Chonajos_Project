@@ -105,7 +105,8 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.web.chon.entities.Producto[ idProductoPk=" + idProductoPk + " ]";
+        return "Producto{" + "idProductoPk=" + idProductoPk + ", nombreProducto=" + nombreProducto + ", descripcionProducto=" + descripcionProducto + ", ventaProductoList=" + ventaProductoList + ", existenciaProductoList=" + existenciaProductoList + ", subproductoList=" + subproductoList + '}';
     }
+  
     
 }

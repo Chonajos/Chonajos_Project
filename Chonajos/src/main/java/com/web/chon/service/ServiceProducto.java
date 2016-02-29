@@ -48,15 +48,6 @@ public class ServiceProducto implements IfaceProducto {
 
     }
 
-//    private Producto contructProductoEntityToProductoDominio(Producto producto){
-//        
-//        ProductoD producto = new ProductoD();
-//        producto.setIdProductoPk(entity.getIdProductoPk());
-//        producto.setNombreProducto(entity.getNombreProducto());
-//        producto.setDescripcionProducto(entity.getDescripcionProducto());
-//        
-//        return producto;
-//    }
     @Override
     public Producto getProductoById(int idProducto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -70,14 +61,19 @@ public class ServiceProducto implements IfaceProducto {
 
     @Override
     public int updateProducto(Producto producto) {
-        System.out.println("service");
+        System.out.println("service"+producto.toString());
         return ejb.updateProducto(producto);
     }
-
-    @Override
+    
+     @Override
     public int insertarProducto(Producto producto) {
-        System.out.println("service");
-        return ejb.insertarProducto(producto);
+         System.out.println("producto"+producto.toString());
+      return ejb.insertarProducto(producto);
+ 
     }
+    
+    
+
+
 
 }

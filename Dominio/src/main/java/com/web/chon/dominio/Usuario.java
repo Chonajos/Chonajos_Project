@@ -21,6 +21,7 @@ public class Usuario extends Generic {
     private String apaternoUsuario;
     private String amaternoUsuario;
     private String contrasenaUsuario;
+    private String confirmaUsuario;
     private Character sexoUsuario;
     private Long telefonoMovilUsuario;
     private Long telefonoFijoUsuario;
@@ -99,6 +100,14 @@ public class Usuario extends Generic {
 
     public void setContrasenaUsuario(String contrasenaUsuario) {
         this.contrasenaUsuario = contrasenaUsuario;
+    }
+
+    public String getConfirmaUsuario() {
+        return confirmaUsuario;
+    }
+
+    public void setConfirmaUsuario(String confirmaUsuario) {
+        this.confirmaUsuario = confirmaUsuario;
     }
 
     public Character getSexoUsuario() {
@@ -331,7 +340,8 @@ public class Usuario extends Generic {
 
     @Override
     public String toString() {
-        return "com.web.chon.entities.Usuario[ idUsuarioPk=" + idUsuarioPk + " ]";
+        return "Usuario{" + "idUsuarioPk=" + idUsuarioPk + ", nombreUsuario=" + nombreUsuario + ", apaternoUsuario=" + apaternoUsuario + ", amaternoUsuario=" + amaternoUsuario + ", contrasenaUsuario=" + contrasenaUsuario + ", confirmaUsuario=" + confirmaUsuario + ", sexoUsuario=" + sexoUsuario + ", telefonoMovilUsuario=" + telefonoMovilUsuario + ", telefonoFijoUsuario=" + telefonoFijoUsuario + ", idNextelUsuario=" + idNextelUsuario + ", correoUsuario=" + correoUsuario + ", numeroInteriorUsuario=" + numeroInteriorUsuario + ", numeroExterioUsuario=" + numeroExterioUsuario + ", referenciaDirecionUsuario=" + referenciaDirecionUsuario + ", calleUsuario=" + calleUsuario + ", coloniaUsuario=" + coloniaUsuario + ", diasCreditoUsuario=" + diasCreditoUsuario + ", rfcUsuario=" + rfcUsuario + ", creditoLimiteUsuario=" + creditoLimiteUsuario + ", claveUsuario=" + claveUsuario + ", sitioWeb=" + sitioWeb + ", razonSocialUsuario=" + razonSocialUsuario + ", fechaAltaUsuario=" + fechaAltaUsuario + ", latitudUsuario=" + latitudUsuario + ", longitudUsuario=" + longitudUsuario + ", idMunicipioFk=" + idMunicipioFk + ", idRolFk=" + idRolFk + ", ventaList=" + ventaList + ", ventaList1=" + ventaList1 + ", camionList=" + camionList + ", cuentaBancariaList=" + cuentaBancariaList + ", sucursalList=" + sucursalList + '}';
     }
+
     
 }
