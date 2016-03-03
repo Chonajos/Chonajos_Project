@@ -29,7 +29,7 @@ public class EjbSubProducto implements NegocioSubProducto {
     public List<Object[]> getSubProductos() {
         try {
 
-            Query query = em.createNativeQuery("Select * from SUBPRODUCTO");
+            Query query = em.createNativeQuery("SELECT * FROM SUBPRODUCTO SUB INNER JOIN PRODUCTO PRO ON PRO.ID_PRODUCTO_PK = SUB.ID_PRODUCTO_FK ORDER BY ID_PRODUCTO_FK,ID_SUBPRODUCTO_PK ASC");
             List<Object[]> resultList = null;
             resultList = query.getResultList();
 
@@ -42,12 +42,10 @@ public class EjbSubProducto implements NegocioSubProducto {
     }
 
     @Override
-    public int deleteSubProducto(int idSubProducto) {
-        System.out.println("deleteProducto");
+    public int deleteSubProducto(String idSubProducto) {
         try {
 
-            System.out.println("id prodcuto a eliminar :" + idSubProducto);
-            Query query = em.createNativeQuery("delete SUBPRODUCTO where ID_SUBPRODUCTO_PK = ?");
+            Query query = em.createNativeQuery("DELETE SUBPRODUCTO where ID_SUBPRODUCTO_PK = ?");
             query.setParameter(1, idSubProducto);
 
             return query.executeUpdate();
@@ -61,16 +59,15 @@ public class EjbSubProducto implements NegocioSubProducto {
 
     @Override
     public int insertarSubProducto(Subproducto subProducto) {
-        System.out.println("insertarProducto");
         try {
-            System.out.println("insert : " + subProducto.toString());
-            Query query = em.createNativeQuery("insert into SUBPRODUCTO (ID_SUBPRODUCTO_PK,NOMBRE_SUBPRODUCTO,DESCRIPCION_SUBPRODUCTO,ID_PRODUCTO_FK,PRECIO_MINIMO,PRECIO_MAXIMO,PRECIO_VENTA) values(s_subproducto.NextVal,?,?,?,?,?,?)");
-            query.setParameter(1, subProducto.getNombreSubproducto());
-            query.setParameter(2, subProducto.getDescripcionSubproducto());
-            query.setParameter(3, subProducto.getIdProductoFk());
-            query.setParameter(4, subProducto.getPrecioMinimo());
-            query.setParameter(5, subProducto.getPrecioMaximo());
-            query.setParameter(6, subProducto.getPrecioVenta());
+            Query query = em.createNativeQuery("INSERT INTO SUBPRODUCTO (ID_SUBPRODUCTO_PK,NOMBRE_SUBPRODUCTO,DESCRIPCION_SUBPRODUCTO,ID_PRODUCTO_FK,PRECIO_MINIMO,PRECIO_MAXIMO,PRECIO_VENTA) values(?,?,?,?,?,?,?)");
+            query.setParameter(1, subProducto.getIdSubproductoPk());
+            query.setParameter(2, subProducto.getNombreSubproducto());
+            query.setParameter(3, subProducto.getDescripcionSubproducto());
+            query.setParameter(4, subProducto.getIdProductoFk());
+            query.setParameter(5, subProducto.getPrecioMinimo());
+            query.setParameter(6, subProducto.getPrecioMaximo());
+            query.setParameter(7, subProducto.getPrecioVenta());
 
             return query.executeUpdate();
 
@@ -85,7 +82,7 @@ public class EjbSubProducto implements NegocioSubProducto {
     public int updateSubProducto(Subproducto subProducto) {
         try {
 
-            System.out.println("producto a modificar :" + subProducto.toString());
+            
             Query query = em.createNativeQuery("update SUBPRODUCTO set NOMBRE_SUBPRODUCTO = ?,DESCRIPCION_SUBPRODUCTO =?,ID_PRODUCTO_FK = ?,PRECIO_MINIMO =?,PRECIO_MAXIMO =?,PRECIO_VENTA =?  where ID_SUBPRODUCTO_PK = ?");
             query.setParameter(1, subProducto.getNombreSubproducto());
             query.setParameter(2, subProducto.getDescripcionSubproducto());
@@ -101,6 +98,14 @@ public class EjbSubProducto implements NegocioSubProducto {
             Logger.getLogger(EjbSubProducto.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
+    }
+    
+     @Override
+    public int getLastIdProducto(String idCategoria) {
+        Query query = em.createNativeQuery("SELECT MAX(SUBSTR(ID_SUBPRODUCTO_PK,5,8)+1 ) ID_SUBPRODUCTO_PK from SUBPRODUCTO where ID_PRODUCTO_FK = ?");
+        query.setParameter(1, idCategoria);
+        String lastId = query.getSingleResult().toString();
+        return Integer.parseInt(lastId);
     }
 
 }
