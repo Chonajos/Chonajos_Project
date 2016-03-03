@@ -80,7 +80,7 @@ public class EjbSubProducto implements NegocioSubProducto {
         try {
 
             
-            Query query = em.createNativeQuery("update SUBPRODUCTO set NOMBRE_SUBPRODUCTO = ?,DESCRIPCION_SUBPRODUCTO =?,ID_PRODUCTO_FK = ?,PRECIO_MINIMO =?,PRECIO_MAXIMO =?,PRECIO_VENTA =?  where ID_SUBPRODUCTO_PK = ?");
+            Query query = em.createNativeQuery("UPDATE SUBPRODUCTO set NOMBRE_SUBPRODUCTO = ?,DESCRIPCION_SUBPRODUCTO =?,ID_PRODUCTO_FK = ?,PRECIO_MINIMO =?,PRECIO_MAXIMO =?,PRECIO_VENTA =?  where ID_SUBPRODUCTO_PK = ?");
             query.setParameter(1, subProducto.getNombreSubproducto());
             query.setParameter(2, subProducto.getDescripcionSubproducto());
             query.setParameter(3, subProducto.getIdProductoFk());
@@ -103,6 +103,14 @@ public class EjbSubProducto implements NegocioSubProducto {
         query.setParameter(1, idCategoria);
         String lastId = query.getSingleResult().toString();
         return Integer.parseInt(lastId);
+    }
+
+    @Override
+    public List<Object[]> getProductoById(String idProducto) {
+        Query query = em.createNativeQuery("SELECT * FROM SUBPRODUCTO WHERE ID_SUBPRODUCTO_PK = ?");
+        query.setParameter(1, idProducto);
+        
+        return query.getResultList();
     }
 
 }
