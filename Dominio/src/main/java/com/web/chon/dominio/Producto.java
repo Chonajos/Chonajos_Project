@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author marcogante
+ * @author Juan de la Cruz
  */
 public class Producto implements Serializable {
 

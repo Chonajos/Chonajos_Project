@@ -10,7 +10,7 @@ import java.math.BigInteger;
 
 /**
  *
- * @author marcogante
+ * @author Juan de la Cruz
  */
 public class Subproducto implements Serializable {
 
