@@ -4,6 +4,7 @@ import com.web.chon.dominio.Subproducto;
 import com.web.chon.dominio.Producto;
 import com.web.chon.service.ServiceProducto;
 import com.web.chon.service.ServiceSubProducto;
+import com.web.chon.util.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -22,7 +23,7 @@ public class BeanSubProducto implements Serializable, BeanSimple {
 
     private ArrayList<Subproducto> model;
     private ArrayList<Subproducto> selectedSubProducto;
-    private ArrayList<Producto>    lstProducto;
+    private ArrayList<Producto> lstProducto;
 
     private ServiceSubProducto serviceSubProducto;
     private ServiceProducto serviceProducto;
@@ -40,7 +41,7 @@ public class BeanSubProducto implements Serializable, BeanSimple {
         lstProducto = serviceProducto.getProductos();
         model = serviceSubProducto.getSubProductos();
 
-        setTitle("Catalogo de Subproductos.");
+        setTitle("Catalogo de Productos.");
         setViewEstate("init");
 
     }
@@ -51,31 +52,31 @@ public class BeanSubProducto implements Serializable, BeanSimple {
         if (!selectedSubProducto.isEmpty()) {
             for (Subproducto producto : selectedSubProducto) {
                 try {
-                    serviceSubProducto.deleteSubProducto(producto.getIdSubproductoPk().intValue());
+                    serviceSubProducto.deleteSubProducto(producto.getIdSubproductoPk());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro eliminado."));
                 } catch (Exception ex) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar eliminar el registro :" + data.getNombreSubproducto()+ "."));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar eliminar el registro :" + data.getNombreSubproducto() + "."));
                 }
             }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Elija un registro a eliminar."));
         }
-
-        return "subProducto";
+        return "producto";
     }
 
     @Override
     public String insert() {
         try {
-            System.out.println("data"+data.toString());
+            data.setIdSubproductoPk(data.getIdProductoFk().concat(Utilidades.rellenaEspacios(serviceSubProducto.getLastIdProducto(data.getIdProductoFk()))));
+            data.setNombreSubproducto(getDescripcionCategoria(data.getIdProductoFk())+" "+data.getNombreSubproducto());
             serviceSubProducto.insertarSubProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
         } catch (Exception ex) {
-            System.out.println("error"+ex.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar insertar el registro :" + data.getNombreSubproducto()+ "."));
+            System.out.println("error" + ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar insertar el registro :" + data.getNombreSubproducto() + "."));
         }
-        
-        return "subProducto";
+
+        return "producto";
     }
 
     @Override
@@ -88,24 +89,39 @@ public class BeanSubProducto implements Serializable, BeanSimple {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar modificar el registro :" + data.getNombreSubproducto() + "."));
         }
 
-        return "subProducto";
+        return "producto";
+    }
+
+    private String getDescripcionCategoria(String idCategoria) {
+        String nombreCategoria = "";
+
+        for (Producto producto : lstProducto) {
+
+            if (producto.getIdProductoPk().trim().equals(idCategoria)) {
+                nombreCategoria = producto.getNombreProducto();
+                break;
+            }
+        }
+
+        return nombreCategoria;
+
     }
 
     @Override
     public void searchById() {
-        setTitle("Editar Subproductos.");
+        setTitle("Editar Productos.");
         setViewEstate("searchById");
 
     }
 
     public void viewNew() {
         data = new Subproducto();
-        setTitle("Alta de Subproductos.");
+        setTitle("Alta de Producto.");
         setViewEstate("new");
     }
 
     public void backView() {
-        setTitle("Catalogo de Subproductos.");
+        setTitle("Catalogo de Producto.");
         setViewEstate("init");
     }
 
@@ -172,6 +188,5 @@ public class BeanSubProducto implements Serializable, BeanSimple {
     public void setServiceProducto(ServiceProducto serviceProducto) {
         this.serviceProducto = serviceProducto;
     }
-    
-    
+
 }

@@ -16,11 +16,17 @@ public interface IfaceSubProducto {
     
     public ArrayList<Subproducto> getSubProductos();
     
-    public Subproducto getSubProductoById(int idSubProducto);
+    public Subproducto getSubProductoById(String idSubProducto);
     
-    public int deleteSubProducto(int idSubProducto);
+    public int deleteSubProducto(String idSubProducto);
     
     public int updateSubProducto(Subproducto subProducto);
     
     public int insertarSubProducto(Subproducto subProducto);
+    
+    /**
+     * Devuelve el siguiente id del producto a registrar por medio del id de categoria
+     * @return 
+     */
+    public int getLastIdProducto(String idCategoria);
 }

@@ -14,22 +14,36 @@ import javax.naming.InitialContext;
  * @author marcogante
  */
 public class Utilidades {
-    
+
     public static Object getEJBRemote(String nameEJB, String iface) throws Exception {
         Context context;
-        Properties properties= new Properties();
+        Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
         properties.put(Context.PROVIDER_URL, "http://localhost:7001");
-        
+
         try {
             context = new InitialContext(properties);
-            String lookup = nameEJB+"#"+iface;
+            String lookup = nameEJB + "#" + iface;
             System.out.println("Lookup: " + lookup);
             return context.lookup(lookup);
         } catch (Exception ex) {
-            throw new Exception("No se encontro  el EJB: '"+nameEJB+"'.");
+            throw new Exception("No se encontro  el EJB: '" + nameEJB + "'.");
         }
-        
+
     }
-    
+
+    /**
+     * Metodo para rellenar a 4 espacio
+     * @param value
+     * @return
+     */
+    public static String rellenaEspacios(int value) {
+        int espacios = 4 - String.valueOf(value).length();
+        String strValue = "";
+        for (int i = 0; i < espacios; i++) {
+            strValue += "0";
+        }
+        return strValue += value;
+    }
+
 }

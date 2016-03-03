@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.Subproducto;
+import com.web.chon.negocio.NegocioProducto;
 import com.web.chon.negocio.NegocioSubProducto;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -34,14 +35,15 @@ public class ServiceSubProducto implements IfaceSubProducto {
             for (Object[] obj : lstObject) {
 
                 Subproducto subProducto = new Subproducto();
-                subProducto.setIdSubproductoPk(obj[0] == null ? null:new BigDecimal(obj[0].toString()));
+                subProducto.setIdSubproductoPk(obj[0] == null ? null:obj[0].toString());
                 subProducto.setNombreSubproducto(obj[1] == null ? "":obj[1].toString());
                 subProducto.setDescripcionSubproducto(obj[2] == null ? "":obj[2].toString());
                 subProducto.setUrlImagenSubproducto(obj[3] == null ? "":obj[3].toString());
-                subProducto.setIdProductoFk( obj[4]== null ? null:new BigDecimal(obj[4].toString()));
+                subProducto.setIdProductoFk( obj[4]== null ? null:obj[4].toString());
                 subProducto.setPrecioMinimo(obj[5]== null ? null:new BigInteger(obj[5].toString()));
                 subProducto.setPrecioMaximo(obj[6]== null ? null:new BigInteger(obj[6].toString()));
                 subProducto.setPrecioVenta(obj[7]== null ? null:new BigInteger(obj[7].toString()));
+                subProducto.setNombreCategoria(obj[9]== null ? "":obj[9].toString());
 
                 lstSubProducto.add(subProducto);
             }
@@ -55,12 +57,12 @@ public class ServiceSubProducto implements IfaceSubProducto {
     }
 
     @Override
-    public Subproducto getSubProductoById(int idSubProducto) {
+    public Subproducto getSubProductoById(String idSubProducto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int deleteSubProducto(int idSubProducto) {
+    public int deleteSubProducto(String idSubProducto) {
        
        return ejb.deleteSubProducto(idSubProducto);
     }
@@ -76,6 +78,19 @@ public class ServiceSubProducto implements IfaceSubProducto {
          
       return ejb.insertarSubProducto(subProducto);
  
+    }
+
+    @Override
+    public int getLastIdProducto(String idCategoria) {
+        try {
+            int idProducto =0;
+            ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
+            idProducto = ejb.getLastIdProducto(idCategoria);
+            return idProducto;
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
+            return 1;
+        }
     }
 
 
