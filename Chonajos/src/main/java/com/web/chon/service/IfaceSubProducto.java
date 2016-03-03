@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Juan
+ * Interface para el servicio del catalogo de productos
+ * @author Juan de la Cruz
  */
 public interface IfaceSubProducto {
     

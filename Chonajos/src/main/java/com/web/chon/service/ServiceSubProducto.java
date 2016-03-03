@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.web.chon.service;
 
 import com.web.chon.dominio.Subproducto;
-import com.web.chon.negocio.NegocioProducto;
 import com.web.chon.negocio.NegocioSubProducto;
 import com.web.chon.util.Utilidades;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +12,14 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author marcogante
+ * Servicio para el catalogo de Productos
+ * @author Juan de la Cruz
  */
 public class ServiceSubProducto implements IfaceSubProducto {
 
     NegocioSubProducto ejb;
 
+    
     @Override
     public ArrayList<Subproducto> getSubProductos() {
         try {

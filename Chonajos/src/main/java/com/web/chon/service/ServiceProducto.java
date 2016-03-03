@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.web.chon.service;
 
 import com.web.chon.dominio.Producto;
 import com.web.chon.negocio.NegocioProducto;
 import com.web.chon.util.Utilidades;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +11,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author marcogante
+ * Servicio para el catalogo de categorias
+ * @author Juan de la Cruz
  */
 public class ServiceProducto implements IfaceProducto {
 

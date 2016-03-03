@@ -13,8 +13,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
- *
- * @author juan Bean para el catlogo de productos
+ * Bean para el catlogo de productos
+ * @author Juan de la Cruz 
  */
 @ViewScoped
 public class BeanSubProducto implements Serializable, BeanSimple {

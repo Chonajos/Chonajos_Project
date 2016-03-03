@@ -7,9 +7,9 @@ package com.web.chon.bean;
 
 /**
  *
- * @author Juan
- *  Interfaz para los los catalogos que hagan un CRUD
- * 
+ * Interfaz para los los catalogos que hagan un CRUD
+ * @author Juan de la Cruz
+ *  
  */
 public interface BeanSimple {
     
