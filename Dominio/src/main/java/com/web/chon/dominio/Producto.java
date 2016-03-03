@@ -6,7 +6,6 @@
 package com.web.chon.dominio;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ import java.util.List;
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private BigDecimal idProductoPk;
+    private String idProductoPk;
     private String nombreProducto;
     private String descripcionProducto;
     private List<VentaProducto> ventaProductoList;
@@ -26,20 +25,20 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(BigDecimal idProductoPk) {
+    public Producto(String idProductoPk) {
         this.idProductoPk = idProductoPk;
     }
 
-    public Producto(BigDecimal idProductoPk, String nombreProducto) {
+    public Producto(String idProductoPk, String nombreProducto) {
         this.idProductoPk = idProductoPk;
         this.nombreProducto = nombreProducto;
     }
 
-    public BigDecimal getIdProductoPk() {
+    public String getIdProductoPk() {
         return idProductoPk;
     }
 
-    public void setIdProductoPk(BigDecimal idProductoPk) {
+    public void setIdProductoPk(String idProductoPk) {
         this.idProductoPk = idProductoPk;
     }
 
