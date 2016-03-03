@@ -18,10 +18,6 @@ CONSTRAINT c_id_producto_pk PRIMARY KEY (id_producto_pk)
 );
 
 
-create table subproducto(
-id_subproducto_pk varchar(8) not null,
-nombre_subproducto varchar (120) not null,
-descripcion_subproducto varchar(255),
 url_imagen_subproducto varchar(255),
 id_producto_fk number ,
 precio_minimo number,
@@ -183,7 +179,7 @@ MINVALUE 0;
 create table existencia_producto(
 id_existencia_producto_pk number not null,
 id_sucursal_fk number,
-id_producto_fk number,
+id_producto_fk varchar(8),
 kilos_existencia number,
 cantidad_empaque number,
 id_tipo_empaque number,
@@ -195,6 +191,7 @@ CONSTRAINT c_id_producto_existencia_fk FOREIGN KEY(id_producto_fk) references pr
 CONSTRAINT c_id_sucursal_existencia_fk FOREIGN KEY(id_sucursal_fk) references sucursal(id_sucursal_pk),
 CONSTRAINT c_id_existencia_producto_pk PRIMARY KEY (id_existencia_producto_pk)
 );
+
 
 CREATE SEQUENCE s_existencia_producto
 INCREMENT BY 1

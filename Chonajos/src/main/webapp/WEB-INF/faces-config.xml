@@ -83,6 +83,17 @@
             <value>#{serviceEmpaque}</value>
         </managed-property>
     </managed-bean>
+    
+    <!--Mantenimeinto a Precios-->
+    <managed-bean>
+        <managed-bean-name>beanMantenimientoPrecio</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanMantenimientoPrecio</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceSubProducto</property-name>
+            <value>#{serviceSubProducto}</value>
+        </managed-property>
+    </managed-bean>
      
         <!--Images--> 
         <managed-bean>
