@@ -11,13 +11,14 @@ import java.util.List;
 
 /**
  *
- * @author marcogante
+ * @author Juan de la Cruz
  */
 public class TipoEmpaque implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private BigDecimal idTipoEmpaquePk;
     private String nombreEmpaque;
+    private boolean estatus;
     private List<VentaProducto> ventaProductoList;
     private List<ExistenciaProducto> existenciaProductoList;
 
@@ -58,6 +59,14 @@ public class TipoEmpaque implements Serializable {
 
     public void setExistenciaProductoList(List<ExistenciaProducto> existenciaProductoList) {
         this.existenciaProductoList = existenciaProductoList;
+    }
+
+    public boolean isEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(boolean estatus) {
+        this.estatus = estatus;
     }
 
     @Override
