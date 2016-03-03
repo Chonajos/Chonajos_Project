@@ -16,11 +16,17 @@ public interface IfaceProducto {
     
     public ArrayList<Producto> getProductos();
     
-    public Producto getProductoById(int idProducto);
+    public Producto getProductoById(String idProducto);
     
-    public int deleteProducto(int idProducto);
+    public int deleteProducto(String idProducto);
     
     public int updateProducto(Producto producto );
+    
+    /**
+     * Obtiene el ultimo id de categoria y lo devuelve como entero
+     * @return 
+     */
+    public int getLastIdCategoria();
     
     public int insertarProducto(Producto producto );
 }

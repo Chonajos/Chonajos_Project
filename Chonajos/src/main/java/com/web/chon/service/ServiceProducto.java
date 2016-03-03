@@ -33,9 +33,9 @@ public class ServiceProducto implements IfaceProducto {
             for (Object[] obj : lstObject) {
 
                 Producto producto = new Producto();
-                producto.setIdProductoPk(new BigDecimal(obj[0].toString()));
-                producto.setNombreProducto(obj[1].toString());
-                producto.setDescripcionProducto(obj[2].toString());
+                producto.setIdProductoPk(obj[0] == null ? "" : obj[0].toString());
+                producto.setNombreProducto(obj[1] == null ? "" : obj[1].toString());
+                producto.setDescripcionProducto(obj[2] == null ? "" : obj[2].toString());
 
                 lstProducto.add(producto);
             }
@@ -49,31 +49,57 @@ public class ServiceProducto implements IfaceProducto {
     }
 
     @Override
-    public Producto getProductoById(int idProducto) {
+    public Producto getProductoById(String idProducto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int deleteProducto(int idProducto) {
-        System.out.println("service");
-       return ejb.deleteProducto(idProducto);
+    public int deleteProducto(String idProducto) {
+        try {
+            System.out.println("service string delete");
+            return ejb.deleteProducto(idProducto);
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
 
     @Override
     public int updateProducto(Producto producto) {
-        System.out.println("service"+producto.toString());
-        return ejb.updateProducto(producto);
+        try {
+            System.out.println("service" + producto.toString());
+            return ejb.updateProducto(producto);
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
-    
-     @Override
+
+    @Override
     public int insertarProducto(Producto producto) {
-         System.out.println("producto"+producto.toString());
-      return ejb.insertarProducto(producto);
- 
+        try {
+            System.out.println("producto" + producto.toString());
+            return ejb.insertarProducto(producto);
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+
     }
-    
-    
 
-
+    @Override
+    public int getLastIdCategoria() {
+        try {
+            int idCategoria =0;
+            ejb = (NegocioProducto) Utilidades.getEJBRemote("ejbProducto", NegocioProducto.class.getName());
+            idCategoria = ejb.getLastIdCategoria();
+            return idCategoria;
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
+            return 1;
+        }
+         
+         
+    }
 
 }

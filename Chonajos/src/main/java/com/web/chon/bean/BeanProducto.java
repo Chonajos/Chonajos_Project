@@ -2,6 +2,7 @@ package com.web.chon.bean;
 
 import com.web.chon.dominio.Producto;
 import com.web.chon.service.ServiceProducto;
+import com.web.chon.util.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -34,7 +35,7 @@ public class BeanProducto implements Serializable, BeanSimple {
         selectedProducto = new ArrayList<Producto>();
         model = serviceProducto.getProductos();
 
-        setTitle("Catalogo de Productos.");
+        setTitle("Catalogo de Categorías.");
         setViewEstate("init");
 
     }
@@ -45,7 +46,7 @@ public class BeanProducto implements Serializable, BeanSimple {
         if (!selectedProducto.isEmpty()) {
             for (Producto producto : selectedProducto) {
                 try {
-                    serviceProducto.deleteProducto(producto.getIdProductoPk().intValue());
+                    serviceProducto.deleteProducto(producto.getIdProductoPk());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro eliminado."));
                 } catch (Exception ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar eliminar el registro :" + data.getNombreProducto() + "."));
@@ -55,21 +56,20 @@ public class BeanProducto implements Serializable, BeanSimple {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Elija un registro a eliminar."));
         }
 
-        return "producto";
+        return "categoria";
     }
 
     @Override
     public String insert() {
         try {
-            System.out.println("data"+data.toString());
+            data.setIdProductoPk(Utilidades.rellenaEspacios(serviceProducto.getLastIdCategoria()));
             serviceProducto.insertarProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
         } catch (Exception ex) {
-            System.out.println("error"+ex.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar insertar el registro :" + data.getNombreProducto() + "."));
         }
         backView();
-        return "producto";
+        return "categoria";
     }
 
     @Override
@@ -82,12 +82,12 @@ public class BeanProducto implements Serializable, BeanSimple {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar modificar el registro :" + data.getNombreProducto() + "."));
         }
 
-        return "producto";
+        return "categoria";
     }
 
     @Override
     public void searchById() {
-        setTitle("Editar Producto.");
+        setTitle("Editar Categoría.");
         setViewEstate("searchById");
 
         System.out.println("data" + data.getDescripcionProducto());
@@ -96,12 +96,12 @@ public class BeanProducto implements Serializable, BeanSimple {
 
     public void viewNew() {
         data = new Producto();
-        setTitle("Alta de Productos.");
+        setTitle("Alta de Categorías.");
         setViewEstate("new");
     }
 
     public void backView() {
-        setTitle("Catalogo de Productos.");
+        setTitle("Catalogo de Categorías.");
         setViewEstate("init");
     }
 
