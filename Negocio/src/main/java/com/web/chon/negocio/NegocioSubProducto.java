@@ -6,7 +6,7 @@ import javax.ejb.Remote;
 
 /**
  *
- * @author marcogante
+ * @author Juan de la Cruz
  */
 @Remote
 public interface NegocioSubProducto {
