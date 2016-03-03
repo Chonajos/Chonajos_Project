@@ -6,7 +6,6 @@
 package com.web.chon.dominio;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
@@ -16,32 +15,33 @@ import java.math.BigInteger;
 public class Subproducto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private BigDecimal idSubproductoPk;
+    private String idSubproductoPk;
     private String nombreSubproducto;
     private String descripcionSubproducto;
     private String urlImagenSubproducto;
     private BigInteger precioMinimo;
     private BigInteger precioMaximo;
     private BigInteger precioVenta;
-    private BigDecimal idProductoFk;
+    private String idProductoFk;
+    private String nombreCategoria;
 
     public Subproducto() {
     }
 
-    public Subproducto(BigDecimal idSubproductoPk) {
+    public Subproducto(String idSubproductoPk) {
         this.idSubproductoPk = idSubproductoPk;
     }
 
-    public Subproducto(BigDecimal idSubproductoPk, String nombreSubproducto) {
+    public Subproducto(String idSubproductoPk, String nombreSubproducto) {
         this.idSubproductoPk = idSubproductoPk;
         this.nombreSubproducto = nombreSubproducto;
     }
 
-    public BigDecimal getIdSubproductoPk() {
+    public String getIdSubproductoPk() {
         return idSubproductoPk;
     }
 
-    public void setIdSubproductoPk(BigDecimal idSubproductoPk) {
+    public void setIdSubproductoPk(String idSubproductoPk) {
         this.idSubproductoPk = idSubproductoPk;
     }
 
@@ -85,15 +85,15 @@ public class Subproducto implements Serializable {
         this.precioMaximo = precioMaximo;
     }
 
-    public BigDecimal getIdProductoFk() {
+    public String getIdProductoFk() {
         return idProductoFk;
     }
 
-    public void setIdProductoFk(BigDecimal idProductoFk) {
+    public void setIdProductoFk(String idProductoFk) {
         this.idProductoFk = idProductoFk;
     }
 
-
+  
     public BigInteger getPrecioVenta() {
         return precioVenta;
     }
@@ -101,6 +101,15 @@ public class Subproducto implements Serializable {
     public void setPrecioVenta(BigInteger precioVenta) {
         this.precioVenta = precioVenta;
     }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+    
     
     
 
