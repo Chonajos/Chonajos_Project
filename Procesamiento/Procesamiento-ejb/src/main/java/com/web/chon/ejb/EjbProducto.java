@@ -14,8 +14,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- *
- * @author juan
+ * Ejb para el catalogo de categorias
+ * @author Juan de la Cruz
  */
 @Stateless(mappedName = "ejbProducto")
 public class EjbProducto implements NegocioProducto {

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Subproducto;
@@ -17,7 +13,8 @@ import javax.persistence.Query;
 
 /**
  *
- * @author juan
+ * Ejb para el catalogo de Productos
+ * @author Juan de la Cruz
  */
 @Stateless(mappedName = "ejbSubProducto")
 public class EjbSubProducto implements NegocioSubProducto {
