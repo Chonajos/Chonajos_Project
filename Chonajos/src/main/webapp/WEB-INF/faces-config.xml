@@ -73,12 +73,22 @@
         </managed-property>
     </managed-bean>
     
-     
-    <!--Images--> 
+    <!--Catalog Tipo Empaque-->
     <managed-bean>
-        <managed-bean-name>beanImages</managed-bean-name>
-        <managed-bean-class>com.web.chon.bean.BeanImages</managed-bean-class>
+        <managed-bean-name>beanEmpaque</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanEmpaque</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceEmpaque</property-name>
+            <value>#{serviceEmpaque}</value>
+        </managed-property>
     </managed-bean>
+     
+        <!--Images--> 
+        <managed-bean>
+            <managed-bean-name>beanImages</managed-bean-name>
+            <managed-bean-class>com.web.chon.bean.BeanImages</managed-bean-class>
+            <managed-bean-scope>view</managed-bean-scope>
+        </managed-bean>
 
 </faces-config>

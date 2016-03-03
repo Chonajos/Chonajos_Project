@@ -32,5 +32,6 @@
     <bean id="serviceProducto" class="com.web.chon.service.ServiceProducto"/>
     <bean id="serviceSubProducto" class="com.web.chon.service.ServiceSubProducto"/>
     <bean id="serviceCatUsuario" class="com.web.chon.service.ServiceCatUsuario"/>
+    <bean id="serviceEmpaque" class="com.web.chon.service.ServiceEmpaque"/>
     
 </beans>

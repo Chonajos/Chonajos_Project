@@ -11,7 +11,7 @@ import javax.naming.InitialContext;
 
 /**
  *
- * @author marcogante
+ * @author Juan de la Cruz
  */
 public class Utilidades {
 
@@ -35,7 +35,7 @@ public class Utilidades {
     /**
      * Metodo para rellenar a 4 espacio
      * @param value
-     * @return
+     * @return String
      */
     public static String rellenaEspacios(int value) {
         int espacios = 4 - String.valueOf(value).length();
