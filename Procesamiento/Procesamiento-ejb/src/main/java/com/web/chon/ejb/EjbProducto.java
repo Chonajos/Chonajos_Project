@@ -28,7 +28,7 @@ public class EjbProducto implements NegocioProducto {
     public List<Object[]> getProductos() {
         try {
 
-            Query query = em.createNativeQuery("Select * from Producto");
+            Query query = em.createNativeQuery("SELECT * FROM PRODUCTO ORDER BY ID_PRODUCTO_PK ASC");
             List<Object[]> resultList = null;
             resultList = query.getResultList();
 
@@ -41,11 +41,8 @@ public class EjbProducto implements NegocioProducto {
     }
 
     @Override
-    public int deleteProducto(int idProducto) {
-        System.out.println("deleteProducto");
+    public int deleteProducto(String idProducto) {
         try {
-
-            System.out.println("id prodcuto a eliminar :" + idProducto);
             Query query = em.createNativeQuery("delete Producto where ID_PRODUCTO_PK = ?");
             query.setParameter(1, idProducto);
 
@@ -60,12 +57,12 @@ public class EjbProducto implements NegocioProducto {
 
     @Override
     public int insertarProducto(Producto producto) {
-        System.out.println("insertarProducto");
         try {
             System.out.println("insert : " + producto.getNombreProducto() + " " + producto.getDescripcionProducto());
-            Query query = em.createNativeQuery("insert into PRODUCTO (ID_PRODUCTO_PK,NOMBRE_PRODUCTO,DESCRIPCION_PRODUCTO) values(S_PRODUCTO.NextVal,?,?)");
-            query.setParameter(1, producto.getNombreProducto());
-            query.setParameter(2, producto.getDescripcionProducto());
+            Query query = em.createNativeQuery("insert into PRODUCTO (ID_PRODUCTO_PK,NOMBRE_PRODUCTO,DESCRIPCION_PRODUCTO) values(?,?,?)");
+            query.setParameter(1, producto.getIdProductoPk());
+            query.setParameter(2, producto.getNombreProducto());
+            query.setParameter(3, producto.getDescripcionProducto());
 
             return query.executeUpdate();
 
@@ -84,7 +81,7 @@ public class EjbProducto implements NegocioProducto {
             Query query = em.createNativeQuery("update Producto set NOMBRE_PRODUCTO = ?,DESCRIPCION_PRODUCTO = ?  where ID_PRODUCTO_PK = ?");
             query.setParameter(1, producto.getNombreProducto());
             query.setParameter(2, producto.getDescripcionProducto());
-            query.setParameter(3, producto.getIdProductoPk().intValue());
+            query.setParameter(3, producto.getIdProductoPk());
 
             return query.executeUpdate();
 
@@ -92,6 +89,13 @@ public class EjbProducto implements NegocioProducto {
             Logger.getLogger(EjbProducto.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
+    }
+
+    @Override
+    public int getLastIdCategoria() {
+        Query query = em.createNativeQuery("SELECT MAX(ID_PRODUCTO_PK)+1 ID_PRODUCTO_PK FROM PRODUCTO");
+        String lastId = query.getSingleResult().toString();
+        return Integer.parseInt(lastId);
     }
     
     
