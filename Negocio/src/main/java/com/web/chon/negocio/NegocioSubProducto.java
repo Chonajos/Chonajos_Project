@@ -11,9 +11,30 @@ import javax.ejb.Remote;
 @Remote
 public interface NegocioSubProducto {
     
+    /**
+     * Regresa una lista con todos los productos que estan en la bd
+     * @return 
+     */
     public List<Object[]> getSubProductos();
+    
+    /**
+     * Elimina un producto de la bd
+     * @param idProducto
+     * @return 0 si no se pudo realizar y 1 si se realizo
+     */
     public int deleteSubProducto(String idProducto);
+    /**
+     * Inserta un producto en la bd
+     * @param subProducto
+     * @return regresa 0 si no se realizo la insertcion y 1 si se realizo correctamente
+     */
     public int insertarSubProducto(Subproducto subProducto);
+    
+    /**
+     * Modifica un producto en la bd
+     * @param subProducto
+     * @return regresa 0 sino se realizo la modificacion y 1 si se realizo correctamente
+     */
     public int updateSubProducto(Subproducto subProducto);
     
     /**
@@ -22,6 +43,13 @@ public interface NegocioSubProducto {
      * @return 
      */
     public int getLastIdProducto(String idCategoria);
+    
+    /**
+     * Obtiene un producto por medio de sus id
+     * @param idProducto
+     * @return 
+     */
+    public List<Object[]> getProductoById(String idProducto);
     
 
 }
