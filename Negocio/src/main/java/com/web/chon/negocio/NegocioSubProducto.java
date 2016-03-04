@@ -51,5 +51,12 @@ public interface NegocioSubProducto {
      */
     public List<Object[]> getProductoById(String idProducto);
     
+    /**
+     * 
+     * @param idProducto
+     * @return 
+     */
+    public List<Object[]> getSubProductoByNombre(String idProducto);
+    
 
 }
