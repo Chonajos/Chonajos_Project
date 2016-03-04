@@ -1,5 +1,6 @@
 package com.web.chon.bean;
 
+import com.web.chon.dominio.Producto;
 import com.web.chon.dominio.Subproducto;
 import com.web.chon.service.ServiceSubProducto;
 import java.io.Serializable;
@@ -21,17 +22,21 @@ public class BeanMantenimientoPrecio implements Serializable {
 
     private ArrayList<Subproducto> model;
     private ArrayList<Subproducto> lstSubProducto;
+    private ArrayList<Subproducto> lstProducto;
 
     private ServiceSubProducto serviceSubProducto;
     private String title = "";
-    public String viewEstate = "";
+    private String viewEstate = "";
     private String idProductoSelecionado = "";
-    public Subproducto data;
+    private Subproducto data;
+    private Subproducto subproducto;
 
     @PostConstruct
     public void init() {
 
         data = new Subproducto();
+        subproducto = new Subproducto();
+        lstProducto = new ArrayList<Subproducto>();
         lstSubProducto = new ArrayList<Subproducto>();
         lstSubProducto = serviceSubProducto.getSubProductos();
 
@@ -50,9 +55,14 @@ public class BeanMantenimientoPrecio implements Serializable {
         return "mantenimientoPrecios";
     }
 
-    public void searchById() {
-        data = serviceSubProducto.getSubProductoById(data.getIdSubproductoPk());
+    public ArrayList<Subproducto> autoComplete(String nombreProducto) {
+        lstProducto = serviceSubProducto.getSubProductoByNombre(nombreProducto);
+        return lstProducto;
 
+    }
+
+    public void searchById() {
+        data = serviceSubProducto.getSubProductoById(subproducto.getIdSubproductoPk());
     }
 
     public String getTitle() {
@@ -109,6 +119,22 @@ public class BeanMantenimientoPrecio implements Serializable {
 
     public void setIdProductoSelecionado(String idProductoSelecionado) {
         this.idProductoSelecionado = idProductoSelecionado;
+    }
+
+    public ArrayList<Subproducto> getLstProducto() {
+        return lstProducto;
+    }
+
+    public void setLstProducto(ArrayList<Subproducto> lstProducto) {
+        this.lstProducto = lstProducto;
+    }
+
+    public Subproducto getSubproducto() {
+        return subproducto;
+    }
+
+    public void setSubproducto(Subproducto subproducto) {
+        this.subproducto = subproducto;
     }
 
 }

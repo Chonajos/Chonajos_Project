@@ -94,12 +94,12 @@
             <value>#{serviceSubProducto}</value>
         </managed-property>
     </managed-bean>
-     
-        <!--Images--> 
-        <managed-bean>
-            <managed-bean-name>beanImages</managed-bean-name>
-            <managed-bean-class>com.web.chon.bean.BeanImages</managed-bean-class>
-            <managed-bean-scope>view</managed-bean-scope>
-        </managed-bean>
+    
+    <!--Images--> 
+    <managed-bean>
+        <managed-bean-name>beanImages</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanImages</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 
 </faces-config>

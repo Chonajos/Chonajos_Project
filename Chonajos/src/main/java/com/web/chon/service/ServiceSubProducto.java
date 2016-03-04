@@ -56,8 +56,7 @@ public class ServiceSubProducto implements IfaceSubProducto {
         try {
             Subproducto subProducto = new Subproducto();
             ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
-            List<Object[]> object = ejb.getProductoById(idSubProducto);
-            
+            List<Object[]> object = ejb.getProductoById(idSubProducto.trim());
             for (Object[] obj : object) {
 
                 subProducto.setIdSubproductoPk(obj[0] == null ? null : obj[0].toString());
@@ -68,7 +67,6 @@ public class ServiceSubProducto implements IfaceSubProducto {
                 subProducto.setPrecioMinimo(obj[5] == null ? null : new BigInteger(obj[5].toString()));
                 subProducto.setPrecioMaximo(obj[6] == null ? null : new BigInteger(obj[6].toString()));
                 subProducto.setPrecioVenta(obj[7] == null ? null : new BigInteger(obj[7].toString()));
-
             }
 
             return subProducto;
@@ -108,6 +106,29 @@ public class ServiceSubProducto implements IfaceSubProducto {
         } catch (Exception ex) {
             Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
             return 1;
+        }
+    }
+
+    @Override
+    public ArrayList<Subproducto> getSubProductoByNombre(String nombre) {
+        try {
+            ArrayList<Subproducto> lstSubProducto = new ArrayList<Subproducto>();
+            ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
+            List<Object[]> object = ejb.getSubProductoByNombre(nombre);
+
+            for (Object[] obj : object) {
+
+                Subproducto subProducto = new Subproducto();
+                subProducto.setIdSubproductoPk(obj[0] == null ? null : obj[0].toString());
+                subProducto.setNombreSubproducto(obj[1] == null ? "" : obj[1].toString());
+
+                lstSubProducto.add(subProducto);
+            }
+
+            return lstSubProducto;
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 

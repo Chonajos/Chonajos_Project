@@ -27,7 +27,15 @@ public interface IfaceSubProducto {
     
     /**
      * Devuelve el siguiente id del producto a registrar por medio del id de categoria
+     * @param idCategoria
      * @return 
      */
     public int getLastIdProducto(String idCategoria);
+    
+    /**
+     * Devuelve una lista de proyectos por medio del nombre
+     * @param nombre
+     * @return 
+     */
+    public ArrayList<Subproducto> getSubProductoByNombre(String nombre);
 }
