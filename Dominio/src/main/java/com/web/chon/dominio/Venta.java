@@ -7,11 +7,12 @@ package com.web.chon.dominio;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  *
- * @author marcogante
+ * @author Juan de la Cruz
  */
 public class Venta implements Serializable {
 
@@ -19,8 +20,9 @@ public class Venta implements Serializable {
     private BigDecimal idVentaPk;
     private Date fechaVenta;
     private Date fechaPromesaPago;
-    private Usuario idClienteFk;
-    private Usuario idVendedorFk;
+    private BigDecimal idClienteFk;
+    private BigDecimal idVendedorFk;
+    private ArrayList<VentaProducto> lstVentaProducto;
 
     public Venta() {
     }
@@ -53,21 +55,30 @@ public class Venta implements Serializable {
         this.fechaPromesaPago = fechaPromesaPago;
     }
 
-    public Usuario getIdClienteFk() {
+    public BigDecimal getIdClienteFk() {
         return idClienteFk;
     }
 
-    public void setIdClienteFk(Usuario idClienteFk) {
+    public void setIdClienteFk(BigDecimal idClienteFk) {
         this.idClienteFk = idClienteFk;
     }
 
-    public Usuario getIdVendedorFk() {
+    public BigDecimal getIdVendedorFk() {
         return idVendedorFk;
     }
 
-    public void setIdVendedorFk(Usuario idVendedorFk) {
+    public void setIdVendedorFk(BigDecimal idVendedorFk) {
         this.idVendedorFk = idVendedorFk;
     }
+
+    public ArrayList<VentaProducto> getLstVentaProducto() {
+        return lstVentaProducto;
+    }
+
+    public void setLstVentaProducto(ArrayList<VentaProducto> lstVentaProducto) {
+        this.lstVentaProducto = lstVentaProducto;
+    }
+    
 
     @Override
     public int hashCode() {

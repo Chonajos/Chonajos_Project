@@ -18,10 +18,14 @@ public class VentaProducto implements Serializable {
     private static final long serialVersionUID = 1L;
     private BigDecimal idVentaProductoPk;
     private BigInteger precioProducto;
-    private BigInteger kilosVendidos;
-    private Producto idProductoFk;
-    private TipoEmpaque idTipoEmpaqueFk;
+    private String idProductoFk;
+    private BigDecimal idTipoEmpaqueFk;
     private TipoVenta idTipoVentaFk;
+    private BigInteger cantidadEmpaque;
+    private BigDecimal kilosVenta;
+    private BigDecimal total;
+    private String nombreProducto;
+    private String nombreEmpaque;
 
     public VentaProducto() {
     }
@@ -46,27 +50,19 @@ public class VentaProducto implements Serializable {
         this.precioProducto = precioProducto;
     }
 
-    public BigInteger getKilosVendidos() {
-        return kilosVendidos;
-    }
-
-    public void setKilosVendidos(BigInteger kilosVendidos) {
-        this.kilosVendidos = kilosVendidos;
-    }
-
-    public Producto getIdProductoFk() {
+    public String getIdProductoFk() {
         return idProductoFk;
     }
 
-    public void setIdProductoFk(Producto idProductoFk) {
+    public void setIdProductoFk(String idProductoFk) {
         this.idProductoFk = idProductoFk;
     }
 
-    public TipoEmpaque getIdTipoEmpaqueFk() {
+    public BigDecimal getIdTipoEmpaqueFk() {
         return idTipoEmpaqueFk;
     }
 
-    public void setIdTipoEmpaqueFk(TipoEmpaque idTipoEmpaqueFk) {
+    public void setIdTipoEmpaqueFk(BigDecimal idTipoEmpaqueFk) {
         this.idTipoEmpaqueFk = idTipoEmpaqueFk;
     }
 
@@ -77,6 +73,47 @@ public class VentaProducto implements Serializable {
     public void setIdTipoVentaFk(TipoVenta idTipoVentaFk) {
         this.idTipoVentaFk = idTipoVentaFk;
     }
+
+    public BigInteger getCantidadEmpaque() {
+        return cantidadEmpaque;
+    }
+
+    public void setCantidadEmpaque(BigInteger cantidadEmpaque) {
+        this.cantidadEmpaque = cantidadEmpaque;
+    }
+
+    public BigDecimal getKilosVenta() {
+        return kilosVenta;
+    }
+
+    public void setKilosVenta(BigDecimal kilosVenta) {
+        this.kilosVenta = kilosVenta;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getNombreEmpaque() {
+        return nombreEmpaque;
+    }
+
+    public void setNombreEmpaque(String nombreEmpaque) {
+        this.nombreEmpaque = nombreEmpaque;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -100,7 +137,19 @@ public class VentaProducto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.web.chon.entities.VentaProducto[ idVentaProductoPk=" + idVentaProductoPk + " ]";
+        return "VentaProducto{" + "idVentaProductoPk=" + idVentaProductoPk + ", precioProducto=" + precioProducto + ", idProductoFk=" + idProductoFk + ", idTipoEmpaqueFk=" + idTipoEmpaqueFk + ", idTipoVentaFk=" + idTipoVentaFk + ", cantidadEmpaque=" + cantidadEmpaque + ", total=" + total + '}';
     }
-    
+
+    public void reset() {
+        
+      idVentaProductoPk = null;
+      precioProducto = null;
+      idProductoFk = null;
+      idTipoEmpaqueFk = new BigDecimal(-1);
+      cantidadEmpaque = null;
+      kilosVenta = null;
+      total = null;
+
+}
+
 }
