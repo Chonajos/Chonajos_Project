@@ -115,7 +115,7 @@ public class EjbSubProducto implements NegocioSubProducto {
 
     @Override
     public List<Object[]> getSubProductoByNombre(String idProducto) {
-        Query query = em.createNativeQuery("SELECT ID_SUBPRODUCTO_PK,NOMBRE_SUBPRODUCTO FROM SUBPRODUCTO WHERE NOMBRE_SUBPRODUCTO LIKE '%"+idProducto+"%'");
+        Query query = em.createNativeQuery("SELECT ID_SUBPRODUCTO_PK,NOMBRE_SUBPRODUCTO FROM SUBPRODUCTO WHERE UPPER(NOMBRE_SUBPRODUCTO) LIKE '%"+idProducto+"%'");
         
         return query.getResultList();
     }
