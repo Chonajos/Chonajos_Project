@@ -47,6 +47,7 @@ public class BeanUsuario {
             }
             
         } catch (Exception e) {
+            usuario.setMensaje(e.toString());
             return "login";
         }
         

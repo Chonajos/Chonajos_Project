@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="./../WEB-INF/templateChonajos.xhtml"
+<ui:composition template="./../WEB-INF/main.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
 
-    <ui:define name="bodyChonajos">
+    <ui:define name="content">
 
 
         <h:form id="formProducto">
@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <p:outputLabel class="col-lg-4 col-md-4 col-sm-4 col-xs-6"  for="selectProductos" value ="Producto:"/> 
+                            <p:outputLabel class="col-lg-4 col-md-4 col-sm-4 col-xs-6"  for="selectProductos" value ="Categoría:"/> 
 
                             <h:selectOneMenu id="selectProductos" value="#{beanSubProducto.data.idProductoFk}" required="true" class="col-lg-8 col-md-8 col-sm-8 col-xs-6" requiredMessage="Ingresa un valor para el campo Producto.">
                                 <f:selectItem itemLabel="Seleccione la opción" itemValue="-1" noSelectionOption="true" />

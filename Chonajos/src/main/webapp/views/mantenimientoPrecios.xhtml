@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="./../WEB-INF/templateChonajos.xhtml"
+<ui:composition template="./../WEB-INF/main.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -8,11 +8,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
 
-    <ui:define name="bodyChonajos">
+    <ui:define name="content">
         <h:form id="formContent">
             <div>
                 <h1>#{beanMantenimientoPrecio.title}</h1>
-
             </div>
             <p:messages id="messages" showDetail="true" showSummary="false" autoUpdate="true" closable="true" />
             <p:panel>

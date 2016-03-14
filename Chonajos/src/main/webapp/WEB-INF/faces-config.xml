@@ -84,6 +84,29 @@
         </managed-property>
     </managed-bean>
     
+    <!--Venta de productos-->
+    <managed-bean>
+        <managed-bean-name>beanVenta</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanVenta</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceSubProducto</property-name>
+            <value>#{serviceSubProducto}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceEmpaque</property-name>
+            <value>#{serviceEmpaque}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceVenta</property-name>
+            <value>#{serviceVenta}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceVentaProducto</property-name>
+            <value>#{serviceVentaProducto}</value>
+        </managed-property>
+    </managed-bean>
+    
     <!--Mantenimeinto a Precios-->
     <managed-bean>
         <managed-bean-name>beanMantenimientoPrecio</managed-bean-name>
@@ -94,6 +117,12 @@
             <value>#{serviceSubProducto}</value>
         </managed-property>
     </managed-bean>
+    <!--Init controller-->
+     <managed-bean>
+        <managed-bean-name>initViewController</managed-bean-name>
+        <managed-bean-class>com.web.chon.bean.BeanInit</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     
     <!--Images--> 
     <managed-bean>
