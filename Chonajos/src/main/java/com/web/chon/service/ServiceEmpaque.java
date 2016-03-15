@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
 /**
  * Servicio para el catlogo de empaques
  *
  * @author Juan de la cruz
  */
+@Service
 public class ServiceEmpaque implements IfaceEmpaque {
 
     NegocioEmpaque ejb;

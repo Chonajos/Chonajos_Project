@@ -4,15 +4,17 @@ import com.web.chon.dominio.Subproducto;
 import com.web.chon.dominio.TipoEmpaque;
 import com.web.chon.dominio.Venta;
 import com.web.chon.dominio.VentaProducto;
-import com.web.chon.service.ServiceEmpaque;
-import com.web.chon.service.ServiceSubProducto;
-import com.web.chon.service.ServiceVenta;
-import com.web.chon.service.ServiceVentaProducto;
+import com.web.chon.service.IfaceEmpaque;
+import com.web.chon.service.IfaceSubProducto;
+import com.web.chon.service.IfaceVenta;
+import com.web.chon.service.IfaceVentaProducto;
 import com.web.chon.util.NumeroALetra;
+import com.web.chon.util.Utilerias;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -24,20 +26,29 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Bean para la venta de productos
  *
  * @author Juan de la Cruz
  */
+@Component
+@Scope("view")
 public class BeanVenta implements Serializable, BeanSimple {
 
     private static final long serialVersionUID = 1L;
 
-    private ServiceVenta serviceVenta;
-    private ServiceEmpaque serviceEmpaque;
-    private ServiceSubProducto serviceSubProducto;
-    private ServiceVentaProducto serviceVentaProducto;
+    @Autowired
+    private IfaceVenta ifaceVenta;
+    @Autowired
+    private IfaceEmpaque ifaceEmpaque;
+    @Autowired
+    private IfaceSubProducto ifaceSubProducto;
+    @Autowired
+    private IfaceVentaProducto ifaceVentaProducto;
 
     private ArrayList<VentaProducto> lstVenta;
     private ArrayList<Subproducto> lstProducto;
@@ -46,6 +57,7 @@ public class BeanVenta implements Serializable, BeanSimple {
     private VentaProducto ventaProducto;
     private Subproducto subProducto;
     private VentaProducto dataRemove;
+//   private BeanUsuario beanUsuario;
 
     private String title = "";
     private String viewEstate = "";
@@ -59,8 +71,8 @@ public class BeanVenta implements Serializable, BeanSimple {
             + "\033[0m                55-56-40-58-46\033[0m\n"
             + "\033[0m                   Bod.  Q85\033[0m\n"
             + "\033[0m                 VALE DE VENTA\033[0m\n"
-            + "\033[0m                   {{dateTime}}\033[0m\n"
-            + "Vale No. {{valeNum}}     {{hora}}\n"
+            + "\033[0m                    {{dateTime}}\033[0m\n"
+            + "Vale No. {{valeNum}}     \n"
             + "C:{{cliente}}\n"
             + "BULT/CAJ    PRODUCTO     PRECIO      TOTAL\n"
             + "{{items}}\n"
@@ -79,8 +91,9 @@ public class BeanVenta implements Serializable, BeanSimple {
         data.setIdTipoEmpaqueFk(new BigDecimal(-1));
         lstProducto = new ArrayList<Subproducto>();
         subProducto = new Subproducto();
-        lstTipoEmpaque = serviceEmpaque.getEmpaques();
+        lstTipoEmpaque = ifaceEmpaque.getEmpaques();
         lstVenta = new ArrayList<VentaProducto>();
+        //System.out.println("Nombre de usuario :" + beanUsuario.getUsuario().getNombreUsuario());
 
         setTitle("Venta de Productos.");
         setViewEstate("init");
@@ -88,7 +101,7 @@ public class BeanVenta implements Serializable, BeanSimple {
     }
 
     public ArrayList<Subproducto> autoComplete(String nombreProducto) {
-        lstProducto = serviceSubProducto.getSubProductoByNombre(nombreProducto.toUpperCase());
+        lstProducto = ifaceSubProducto.getSubProductoByNombre(nombreProducto.toUpperCase());
         return lstProducto;
 
     }
@@ -105,16 +118,16 @@ public class BeanVenta implements Serializable, BeanSimple {
         try {
             if (lstProducto.size() > 0) {
 
-                idVenta = serviceVenta.getNextVal();
+                idVenta = ifaceVenta.getNextVal();
 
                 venta.setIdVentaPk(new BigDecimal(idVenta));
-                int ventaInsertada = serviceVenta.insertarVenta(venta);
+                int ventaInsertada = ifaceVenta.insertarVenta(venta);
                 if (ventaInsertada != 0) {
                     for (VentaProducto producto : lstVenta) {
 
-                        serviceVentaProducto.insertarVentaProducto(producto, idVenta);
+                        ifaceVentaProducto.insertarVentaProducto(producto, idVenta);
                     }
-                    imprimirTicket();
+                    imprimirTicket(idVenta);
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "La venta se realizo correctamente."));
 
                 } else {
@@ -139,7 +152,7 @@ public class BeanVenta implements Serializable, BeanSimple {
     public void searchById() {
 
         if (subProducto.getIdSubproductoPk() != null) {
-            subProducto = serviceSubProducto.getSubProductoById(subProducto.getIdSubproductoPk());
+            subProducto = ifaceSubProducto.getSubProductoById(subProducto.getIdSubproductoPk());
             data.setPrecioProducto(subProducto.getPrecioVenta());
             data.setIdProductoFk(subProducto.getIdSubproductoPk());
             data.setNombreProducto(subProducto.getNombreSubproducto());
@@ -193,7 +206,7 @@ public class BeanVenta implements Serializable, BeanSimple {
         calcularTotalVenta();
     }
 
-    private void imprimirTicket() {
+    private void imprimirTicket(int idVenta) {
 
         String productos = "";
         NumeroALetra numeroLetra = new NumeroALetra();
@@ -205,12 +218,15 @@ public class BeanVenta implements Serializable, BeanSimple {
         System.out.println("df " + df.format(totalVenta));
         String totalVentaStr = numeroLetra.Convertir(df.format(totalVenta), true);
 
-        putValues("ChonAjos", "1", "Q85", "10/03/2016", productos, df.format(totalVenta), totalVentaStr);
+        putValues("ChonAjos", "1", "Q85", "10/03/2016", productos, df.format(totalVenta), totalVentaStr, idVenta);
         imprimirDefault();
 
     }
 
-    private void putValues(String nameLocal, String box, String caissier, String dateTime, String items, String total, String totalVentaStr) {
+    private void putValues(String nameLocal, String box, String caissier, String dateTime, String items, String total, String totalVentaStr, int idVenta) {
+
+        Date date = new Date();
+
         contentTicket = contentTicket.replace("{{nameLocal}}", nameLocal);
         contentTicket = contentTicket.replace("{{box}}", box);
         contentTicket = contentTicket.replace("{{cajero}}", caissier);
@@ -218,6 +234,8 @@ public class BeanVenta implements Serializable, BeanSimple {
         contentTicket = contentTicket.replace("{{items}}", items);
         contentTicket = contentTicket.replace("{{total}}", total);
         contentTicket = contentTicket.replace("{{totalLetra}}", totalVentaStr);
+        contentTicket = contentTicket.replace("{{valeNum}}", Integer.toString(idVenta));
+        contentTicket = contentTicket.replace("{{dateTime}}", Utilerias.getFechaDDMMYYYYHHMM(date));
 
     }
 
@@ -317,22 +335,6 @@ public class BeanVenta implements Serializable, BeanSimple {
         this.subProducto = subProducto;
     }
 
-    public ServiceSubProducto getServiceSubProducto() {
-        return serviceSubProducto;
-    }
-
-    public void setServiceSubProducto(ServiceSubProducto serviceSubProducto) {
-        this.serviceSubProducto = serviceSubProducto;
-    }
-
-    public ServiceEmpaque getServiceEmpaque() {
-        return serviceEmpaque;
-    }
-
-    public void setServiceEmpaque(ServiceEmpaque serviceEmpaque) {
-        this.serviceEmpaque = serviceEmpaque;
-    }
-
     public VentaProducto getDataRemove() {
         return dataRemove;
     }
@@ -355,22 +357,6 @@ public class BeanVenta implements Serializable, BeanSimple {
 
     public void setVenta(Venta venta) {
         this.venta = venta;
-    }
-
-    public ServiceVenta getServiceVenta() {
-        return serviceVenta;
-    }
-
-    public void setServiceVenta(ServiceVenta serviceVenta) {
-        this.serviceVenta = serviceVenta;
-    }
-
-    public ServiceVentaProducto getServiceVentaProducto() {
-        return serviceVentaProducto;
-    }
-
-    public void setServiceVentaProducto(ServiceVentaProducto serviceVentaProducto) {
-        this.serviceVentaProducto = serviceVentaProducto;
     }
 
     public String getContentTicket() {

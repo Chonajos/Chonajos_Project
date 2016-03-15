@@ -1,30 +1,34 @@
 package com.web.chon.bean;
 
-import com.web.chon.dominio.Producto;
 import com.web.chon.dominio.Subproducto;
-import com.web.chon.service.ServiceSubProducto;
+import com.web.chon.service.IfaceSubProducto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Bean para el Mantenimiento a Precios
  *
  * @author Juan de la Cruz
  */
-@ViewScoped
+@Component
+@Scope("view")
 public class BeanMantenimientoPrecio implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Autowired
+    private IfaceSubProducto ifaceSubProducto;
 
     private ArrayList<Subproducto> model;
     private ArrayList<Subproducto> lstSubProducto;
     private ArrayList<Subproducto> lstProducto;
 
-    private ServiceSubProducto serviceSubProducto;
     private String title = "";
     private String viewEstate = "";
     private String idProductoSelecionado = "";
@@ -38,7 +42,7 @@ public class BeanMantenimientoPrecio implements Serializable {
         subproducto = new Subproducto();
         lstProducto = new ArrayList<Subproducto>();
         lstSubProducto = new ArrayList<Subproducto>();
-        lstSubProducto = serviceSubProducto.getSubProductos();
+        lstSubProducto = ifaceSubProducto.getSubProductos();
 
         setTitle("Mantenimiento de Precios.");
         setViewEstate("init");
@@ -47,7 +51,7 @@ public class BeanMantenimientoPrecio implements Serializable {
 
     public String updatePrecio() {
 
-        if (serviceSubProducto.updateSubProducto(data) == 1) {
+        if (ifaceSubProducto.updateSubProducto(data) == 1) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro modificado."));
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Registro modificado."));
@@ -56,13 +60,13 @@ public class BeanMantenimientoPrecio implements Serializable {
     }
 
     public ArrayList<Subproducto> autoComplete(String nombreProducto) {
-        lstProducto = serviceSubProducto.getSubProductoByNombre(nombreProducto);
+        lstProducto = ifaceSubProducto.getSubProductoByNombre(nombreProducto);
         return lstProducto;
 
     }
 
     public void searchById() {
-        data = serviceSubProducto.getSubProductoById(subproducto.getIdSubproductoPk());
+        data = ifaceSubProducto.getSubProductoById(subproducto.getIdSubproductoPk());
     }
 
     public String getTitle() {
@@ -95,14 +99,6 @@ public class BeanMantenimientoPrecio implements Serializable {
 
     public void setLstSubProducto(ArrayList<Subproducto> lstSubProducto) {
         this.lstSubProducto = lstSubProducto;
-    }
-
-    public ServiceSubProducto getServiceSubProducto() {
-        return serviceSubProducto;
-    }
-
-    public void setServiceSubProducto(ServiceSubProducto serviceSubProducto) {
-        this.serviceSubProducto = serviceSubProducto;
     }
 
     public Subproducto getData() {

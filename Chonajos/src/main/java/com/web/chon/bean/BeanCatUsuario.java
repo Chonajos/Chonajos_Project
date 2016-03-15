@@ -1,19 +1,28 @@
 package com.web.chon.bean;
 
 import com.web.chon.dominio.Usuario;
+import com.web.chon.service.IfaceCatUsuario;
 import com.web.chon.service.ServiceCatUsuario;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author marcogante
  */
+@Component
+@Scope("view")
 public class BeanCatUsuario implements BeanSimple {
 
-    private ServiceCatUsuario serviceCatUsuario;
+    private static final long serialVersionUID = 1L;
+
+    @Autowired
+    private IfaceCatUsuario ifaceCatUsuario;
 
     private ArrayList<Usuario> model;
     private ArrayList<Usuario> selectedUsuario;
@@ -27,7 +36,7 @@ public class BeanCatUsuario implements BeanSimple {
         data = new Usuario();
         model = new ArrayList<Usuario>();
         selectedUsuario = new ArrayList<Usuario>();
-        model = serviceCatUsuario.getUsuarios();
+        model = ifaceCatUsuario.getUsuarios();
 
         setTitle("Catalogo de Usuarios.");
         setViewEstate("init");
@@ -39,7 +48,7 @@ public class BeanCatUsuario implements BeanSimple {
         if (!selectedUsuario.isEmpty()) {
             for (Usuario usuario : selectedUsuario) {
                 try {
-                    serviceCatUsuario.deleteUsuarios(usuario.getIdUsuarioPk().intValue());
+                    ifaceCatUsuario.deleteUsuarios(usuario.getIdUsuarioPk().intValue());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro eliminado."));
                 } catch (Exception ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar eliminar el registro :" + data.getNombreUsuario() + "."));
@@ -56,7 +65,7 @@ public class BeanCatUsuario implements BeanSimple {
     public String insert() {
         try {
             System.out.println("data" + data.toString());
-            if (serviceCatUsuario.insertarUsuarios(data) == 0) {
+            if (ifaceCatUsuario.insertarUsuarios(data) == 0) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "La clave del usuario " + data.getClaveUsuario() + " ya existe. Intenta con otra clave diferente"));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
@@ -73,7 +82,7 @@ public class BeanCatUsuario implements BeanSimple {
     @Override
     public String update() {
         try {
-            serviceCatUsuario.updateUsuario(data);
+            ifaceCatUsuario.updateUsuario(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro modificado."));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar modificar el registro :" + data.getNombreUsuario() + "."));
@@ -98,14 +107,6 @@ public class BeanCatUsuario implements BeanSimple {
     public void backView() {
         setTitle("Catalogo de Usuarios.");
         setViewEstate("init");
-    }
-
-    public ServiceCatUsuario getServiceCatUsuario() {
-        return serviceCatUsuario;
-    }
-
-    public void setServiceCatUsuario(ServiceCatUsuario serviceCatUsuario) {
-        this.serviceCatUsuario = serviceCatUsuario;
     }
 
     public Usuario getData() {

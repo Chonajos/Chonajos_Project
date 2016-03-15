@@ -2,31 +2,41 @@ package com.web.chon.bean;
 
 import com.web.chon.dominio.Subproducto;
 import com.web.chon.dominio.Producto;
+import com.web.chon.service.IfaceProducto;
+import com.web.chon.service.IfaceSubProducto;
 import com.web.chon.service.ServiceProducto;
 import com.web.chon.service.ServiceSubProducto;
-import com.web.chon.util.Utilidades;
+import com.web.chon.util.Utilerias;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Bean para el catlogo de productos
- * @author Juan de la Cruz 
+ *
+ * @author Juan de la Cruz
  */
-@ViewScoped
+@Component
+@Scope("view")
 public class BeanSubProducto implements Serializable, BeanSimple {
 
     private static final long serialVersionUID = 1L;
 
+    @Autowired
+    private IfaceSubProducto ifaceSubProducto;
+    @Autowired
+    private IfaceProducto ifaceProducto;
+    
     private ArrayList<Subproducto> model;
     private ArrayList<Subproducto> selectedSubProducto;
     private ArrayList<Producto> lstProducto;
 
-    private ServiceSubProducto serviceSubProducto;
-    private ServiceProducto serviceProducto;
     private String title = "";
     public String viewEstate = "";
     public Subproducto data;
@@ -38,8 +48,8 @@ public class BeanSubProducto implements Serializable, BeanSimple {
         model = new ArrayList<Subproducto>();
         lstProducto = new ArrayList<Producto>();
         selectedSubProducto = new ArrayList<Subproducto>();
-        lstProducto = serviceProducto.getProductos();
-        model = serviceSubProducto.getSubProductos();
+        lstProducto = ifaceProducto.getProductos();
+        model = ifaceSubProducto.getSubProductos();
 
         setTitle("Catalogo de Productos.");
         setViewEstate("init");
@@ -52,7 +62,7 @@ public class BeanSubProducto implements Serializable, BeanSimple {
         if (!selectedSubProducto.isEmpty()) {
             for (Subproducto producto : selectedSubProducto) {
                 try {
-                    serviceSubProducto.deleteSubProducto(producto.getIdSubproductoPk());
+                    ifaceSubProducto.deleteSubProducto(producto.getIdSubproductoPk());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro eliminado."));
                 } catch (Exception ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar eliminar el registro :" + data.getNombreSubproducto() + "."));
@@ -67,9 +77,9 @@ public class BeanSubProducto implements Serializable, BeanSimple {
     @Override
     public String insert() {
         try {
-            data.setIdSubproductoPk(data.getIdProductoFk().concat(Utilidades.rellenaEspacios(serviceSubProducto.getLastIdProducto(data.getIdProductoFk()))));
-            data.setNombreSubproducto(getDescripcionCategoria(data.getIdProductoFk())+" "+data.getNombreSubproducto());
-            serviceSubProducto.insertarSubProducto(data);
+            data.setIdSubproductoPk(data.getIdProductoFk().concat(Utilerias.rellenaEspacios(ifaceSubProducto.getLastIdProducto(data.getIdProductoFk()))));
+            data.setNombreSubproducto(getDescripcionCategoria(data.getIdProductoFk()) + " " + data.getNombreSubproducto());
+            ifaceSubProducto.insertarSubProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
         } catch (Exception ex) {
             System.out.println("error" + ex.getMessage());
@@ -83,7 +93,7 @@ public class BeanSubProducto implements Serializable, BeanSimple {
     public String update() {
 
         try {
-            serviceSubProducto.updateSubProducto(data);
+            ifaceSubProducto.updateSubProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro modificado."));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar modificar el registro :" + data.getNombreSubproducto() + "."));
@@ -141,14 +151,6 @@ public class BeanSubProducto implements Serializable, BeanSimple {
         this.data = data;
     }
 
-    public ServiceSubProducto getServiceSubProducto() {
-        return serviceSubProducto;
-    }
-
-    public void setServiceSubProducto(ServiceSubProducto serviceSubProducto) {
-        this.serviceSubProducto = serviceSubProducto;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -179,14 +181,6 @@ public class BeanSubProducto implements Serializable, BeanSimple {
 
     public void setLstProducto(ArrayList<Producto> lstProducto) {
         this.lstProducto = lstProducto;
-    }
-
-    public ServiceProducto getServiceProducto() {
-        return serviceProducto;
-    }
-
-    public void setServiceProducto(ServiceProducto serviceProducto) {
-        this.serviceProducto = serviceProducto;
     }
 
 }

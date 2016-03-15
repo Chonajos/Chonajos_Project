@@ -1,6 +1,7 @@
 package com.web.chon.bean;
 
 import com.web.chon.dominio.TipoEmpaque;
+import com.web.chon.service.IfaceEmpaque;
 import com.web.chon.service.ServiceEmpaque;
 import com.web.chon.util.Utilidades;
 import java.io.Serializable;
@@ -9,20 +10,27 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Bean para el catlogo de Empaques
- * @author Juan de la Cruz 
+ *
+ * @author Juan de la Cruz
  */
-@ViewScoped
+@Component
+@Scope("view")
 public class BeanEmpaque implements Serializable, BeanSimple {
 
     private static final long serialVersionUID = 1L;
 
+    @Autowired
+    private IfaceEmpaque ifaceEmpaque;
+
     private ArrayList<TipoEmpaque> model;
     private ArrayList<TipoEmpaque> selectedEmpaque;
 
-    private ServiceEmpaque serviceEmpaque;
     private String title = "";
     public String viewEstate = "";
     public TipoEmpaque data;
@@ -33,7 +41,7 @@ public class BeanEmpaque implements Serializable, BeanSimple {
         data = new TipoEmpaque();
         model = new ArrayList<TipoEmpaque>();
         selectedEmpaque = new ArrayList<TipoEmpaque>();
-        model = serviceEmpaque.getEmpaques();
+        model = ifaceEmpaque.getEmpaques();
 
         setTitle("Catalogo de Tipo Empaques.");
         setViewEstate("init");
@@ -46,7 +54,7 @@ public class BeanEmpaque implements Serializable, BeanSimple {
         if (!selectedEmpaque.isEmpty()) {
             for (TipoEmpaque tipoEmpaque : selectedEmpaque) {
                 try {
-                    serviceEmpaque.deleteEmpaque(tipoEmpaque.getIdTipoEmpaquePk().intValue());
+                    ifaceEmpaque.deleteEmpaque(tipoEmpaque.getIdTipoEmpaquePk().intValue());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro eliminado."));
                 } catch (Exception ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar eliminar el registro :" + data.getNombreEmpaque() + "."));
@@ -62,10 +70,10 @@ public class BeanEmpaque implements Serializable, BeanSimple {
     @Override
     public String insert() {
         try {
-            serviceEmpaque.insertarEmpaque(data);
+            ifaceEmpaque.insertarEmpaque(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar insertar el registro :" + data.getNombreEmpaque()+ "."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar insertar el registro :" + data.getNombreEmpaque() + "."));
         }
         backView();
         return "empaque";
@@ -75,10 +83,10 @@ public class BeanEmpaque implements Serializable, BeanSimple {
     public String update() {
 
         try {
-            serviceEmpaque.updateEmpaque(data);
+            ifaceEmpaque.updateEmpaque(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro modificado."));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar modificar el registro :" + data.getNombreEmpaque()+ "."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar modificar el registro :" + data.getNombreEmpaque() + "."));
         }
 
         return "empaque";
@@ -134,14 +142,6 @@ public class BeanEmpaque implements Serializable, BeanSimple {
         this.selectedEmpaque = selectedEmpaque;
     }
 
-    public ServiceEmpaque getServiceEmpaque() {
-        return serviceEmpaque;
-    }
-
-    public void setServiceEmpaque(ServiceEmpaque serviceEmpaque) {
-        this.serviceEmpaque = serviceEmpaque;
-    }
-
     public TipoEmpaque getData() {
         return data;
     }
@@ -150,5 +150,4 @@ public class BeanEmpaque implements Serializable, BeanSimple {
         this.data = data;
     }
 
- 
 }

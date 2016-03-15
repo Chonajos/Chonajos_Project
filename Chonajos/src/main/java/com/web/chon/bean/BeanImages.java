@@ -10,12 +10,15 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.naming.Name;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author marcogante
  */
-@ManagedBean()
+@Component
+@Scope("view")
 public class BeanImages {
     
     private List<String> images;

@@ -4,11 +4,18 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
     
-    <application>
-        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+   <application>
+    	<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    	<action-listener>org.primefaces.application.DialogActionListener</action-listener>
+        <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+        <view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+	     <resource-bundle>
+	     	<base-name>messages</base-name>
+	     	<var>msgs</var>
+	     </resource-bundle>
     </application>
 
-    <managed-bean>
+<!--    <managed-bean>
         <managed-bean-name>dominioUsuario</managed-bean-name>
         <managed-bean-class>com.web.chon.dominio.Usuario</managed-bean-class>
         <managed-bean-scope>none</managed-bean-scope>
@@ -28,7 +35,7 @@
         </managed-property>
     </managed-bean> 
     
-    <!--Productos-->
+    Productos
     <managed-bean>
         <managed-bean-name>dominioProducto</managed-bean-name>
         <managed-bean-class>com.web.chon.dominio.Producto</managed-bean-class>
@@ -45,7 +52,7 @@
         </managed-property>
     </managed-bean>     
     
-    <!--subProductos-->
+    subProductos
     
     <managed-bean>
         <managed-bean-name>beanSubProducto</managed-bean-name>
@@ -61,7 +68,7 @@
         </managed-property>
     </managed-bean> 
     
-    <!--Usuarios-->    
+    Usuarios    
         
     <managed-bean>
         <managed-bean-name>beanCatUsuario</managed-bean-name>
@@ -73,7 +80,7 @@
         </managed-property>
     </managed-bean>
     
-    <!--Catalog Tipo Empaque-->
+    Catalog Tipo Empaque
     <managed-bean>
         <managed-bean-name>beanEmpaque</managed-bean-name>
         <managed-bean-class>com.web.chon.bean.BeanEmpaque</managed-bean-class>
@@ -84,7 +91,7 @@
         </managed-property>
     </managed-bean>
     
-    <!--Venta de productos-->
+    Venta de productos
     <managed-bean>
         <managed-bean-name>beanVenta</managed-bean-name>
         <managed-bean-class>com.web.chon.bean.BeanVenta</managed-bean-class>
@@ -107,7 +114,7 @@
         </managed-property>
     </managed-bean>
     
-    <!--Mantenimeinto a Precios-->
+    Mantenimeinto a Precios
     <managed-bean>
         <managed-bean-name>beanMantenimientoPrecio</managed-bean-name>
         <managed-bean-class>com.web.chon.bean.BeanMantenimientoPrecio</managed-bean-class>
@@ -117,18 +124,18 @@
             <value>#{serviceSubProducto}</value>
         </managed-property>
     </managed-bean>
-    <!--Init controller-->
+    Init controller
      <managed-bean>
         <managed-bean-name>initViewController</managed-bean-name>
         <managed-bean-class>com.web.chon.bean.BeanInit</managed-bean-class>
     
         <managed-bean-scope>session</managed-bean-scope></managed-bean>
     
-    <!--Images--> 
+    Images 
     <managed-bean>
         <managed-bean-name>beanImages</managed-bean-name>
         <managed-bean-class>com.web.chon.bean.BeanImages</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+    </managed-bean>-->
 
 </faces-config>

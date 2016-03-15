@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author marcogante
+ * @author Juan de la Cruz
  */
+@Service
 public class ServiceCatUsuario implements IfaceCatUsuario {
 
     NegocioCatUsuario ejb;

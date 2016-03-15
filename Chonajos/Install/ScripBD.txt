@@ -35,6 +35,8 @@ estatus_empaque char(1),
 CONSTRAINT c_id_tipo_empaque_pk PRIMARY KEY (id_tipo_empaque_pk)
 );
 
+
+
 CREATE SEQUENCE s_tipo_empaque
 INCREMENT BY 1
 START WITH 1
@@ -261,3 +263,10 @@ COMPRA_PRODUCTOS
 EXISTENCIA_PRODUCTO
 subproductos
 productos
+
+
+
+
+//Inserts default
+
+INSERT INTO TIPO_EMPAQUE (ID_TIPO_EMPAQUE_PK,NOMBRE_EMPAQUE,ESTATUS_EMPAQUE) values(S_TIPO_EMPAQUE.NextVal,'kilos',1)

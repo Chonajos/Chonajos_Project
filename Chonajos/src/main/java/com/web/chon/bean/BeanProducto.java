@@ -1,28 +1,35 @@
 package com.web.chon.bean;
 
 import com.web.chon.dominio.Producto;
-import com.web.chon.service.ServiceProducto;
-import com.web.chon.util.Utilidades;
+import com.web.chon.service.IfaceProducto;
+import com.web.chon.util.Utilerias;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Bean para el catlogo de productos
- * @author Juan de la Cruz 
+ *
+ * @author Juan de la Cruz
  */
-@ViewScoped
+@Component
+@Scope("view")
 public class BeanProducto implements Serializable, BeanSimple {
 
     private static final long serialVersionUID = 1L;
 
+    @Autowired
+    private IfaceProducto ifaceProducto;
+
     private ArrayList<Producto> model;
     private ArrayList<Producto> selectedProducto;
 
-    private ServiceProducto serviceProducto;
     private String title = "";
     public String viewEstate = "";
     public Producto data;
@@ -33,7 +40,7 @@ public class BeanProducto implements Serializable, BeanSimple {
         data = new Producto();
         model = new ArrayList<Producto>();
         selectedProducto = new ArrayList<Producto>();
-        model = serviceProducto.getProductos();
+        model = ifaceProducto.getProductos();
 
         setTitle("Catalogo de Categorías.");
         setViewEstate("init");
@@ -46,7 +53,7 @@ public class BeanProducto implements Serializable, BeanSimple {
         if (!selectedProducto.isEmpty()) {
             for (Producto producto : selectedProducto) {
                 try {
-                    serviceProducto.deleteProducto(producto.getIdProductoPk());
+                    ifaceProducto.deleteProducto(producto.getIdProductoPk());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro eliminado."));
                 } catch (Exception ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar eliminar el registro :" + data.getNombreProducto() + "."));
@@ -62,8 +69,8 @@ public class BeanProducto implements Serializable, BeanSimple {
     @Override
     public String insert() {
         try {
-            data.setIdProductoPk(Utilidades.rellenaEspacios(serviceProducto.getLastIdCategoria()));
-            serviceProducto.insertarProducto(data);
+            data.setIdProductoPk(Utilerias.rellenaEspacios(ifaceProducto.getLastIdCategoria()));
+            ifaceProducto.insertarProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro insertado."));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar insertar el registro :" + data.getNombreProducto() + "."));
@@ -76,7 +83,7 @@ public class BeanProducto implements Serializable, BeanSimple {
     public String update() {
 
         try {
-            serviceProducto.updateProducto(data);
+            ifaceProducto.updateProducto(data);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro modificado."));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ocurrio un error al intentar modificar el registro :" + data.getNombreProducto() + "."));
@@ -119,14 +126,6 @@ public class BeanProducto implements Serializable, BeanSimple {
 
     public void setData(Producto data) {
         this.data = data;
-    }
-
-    public ServiceProducto getServiceProducto() {
-        return serviceProducto;
-    }
-
-    public void setServiceProducto(ServiceProducto serviceProducto) {
-        this.serviceProducto = serviceProducto;
     }
 
     public String getTitle() {

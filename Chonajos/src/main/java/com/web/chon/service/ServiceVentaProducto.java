@@ -6,6 +6,7 @@ import com.web.chon.util.Utilidades;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Juan de la Cruz
  */
+@Service
 public class ServiceVentaProducto implements IfaceVentaProducto {
 
     NegocioVentaProducto ejb;

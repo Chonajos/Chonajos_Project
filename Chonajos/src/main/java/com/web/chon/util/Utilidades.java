@@ -19,7 +19,7 @@ public class Utilidades {
         Context context;
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
-        properties.put(Context.PROVIDER_URL, "http://localhost:7001");
+        properties.put(Context.PROVIDER_URL, "http://localhost:7001");//TODO arreglar para que tome la url por defecto
 
         try {
             context = new InitialContext(properties);
@@ -31,19 +31,6 @@ public class Utilidades {
         }
 
     }
-
-    /**
-     * Metodo para rellenar a 4 espacio
-     * @param value
-     * @return String
-     */
-    public static String rellenaEspacios(int value) {
-        int espacios = 4 - String.valueOf(value).length();
-        String strValue = "";
-        for (int i = 0; i < espacios; i++) {
-            strValue += "0";
-        }
-        return strValue += value;
-    }
+    
 
 }
